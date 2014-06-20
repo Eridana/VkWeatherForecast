@@ -12,7 +12,7 @@
 
 @interface WeatherData : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * cityId;
+@property (nonatomic, retain) NSData * cityId;
 @property (nonatomic, retain) NSNumber * cloudsValue;
 @property (nonatomic, retain) NSDate   * date;
 @property (nonatomic, retain) NSNumber * humidity;

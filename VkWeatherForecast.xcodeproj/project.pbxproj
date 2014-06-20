@@ -25,6 +25,7 @@
 		3FAEBAFA19544E3400235D5D /* WeatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBAF919544E3400235D5D /* WeatherData.m */; };
 		3FAEBAFD19544E6500235D5D /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBAFC19544E6500235D5D /* WeatherManager.m */; };
 		3FAEBAFF19544F3B00235D5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBAFE19544F3B00235D5D /* CoreData.framework */; };
+		3FAEBB041954523100235D5D /* WeatherData+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBB031954523100235D5D /* WeatherData+Save.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		3FAEBAFB19544E6500235D5D /* WeatherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherManager.h; sourceTree = "<group>"; };
 		3FAEBAFC19544E6500235D5D /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
 		3FAEBAFE19544F3B00235D5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3FAEBB021954523100235D5D /* WeatherData+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeatherData+Save.h"; sourceTree = "<group>"; };
+		3FAEBB031954523100235D5D /* WeatherData+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeatherData+Save.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 		3FAEBAF319544B3900235D5D /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				3FAEBB021954523100235D5D /* WeatherData+Save.h */,
+				3FAEBB031954523100235D5D /* WeatherData+Save.m */,
 				3FAEBAFB19544E6500235D5D /* WeatherManager.h */,
 				3FAEBAFC19544E6500235D5D /* WeatherManager.m */,
 			);
@@ -302,6 +307,7 @@
 				3FAEBAFD19544E6500235D5D /* WeatherManager.m in Sources */,
 				3FAEBAF719544C0200235D5D /* VkWeatherForecast.xcdatamodeld in Sources */,
 				3FAEBAD4195447F600235D5D /* ViewController.m in Sources */,
+				3FAEBB041954523100235D5D /* WeatherData+Save.m in Sources */,
 				3FAEBACE195447F600235D5D /* AppDelegate.m in Sources */,
 				3FAEBACA195447F600235D5D /* main.m in Sources */,
 			);

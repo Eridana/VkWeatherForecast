@@ -1,47 +1,44 @@
 //
-//  WeatherApi.m
+//  WeatherManager.m
 //  VkWeatherForecast
 //
-//  Created by Jane on 20.06.14.
+//  Created by Женя Михайлова on 21.06.14.
 //  Copyright (c) 2014 Jane. All rights reserved.
 //
 
 #import "WeatherManager.h"
-
-@interface WeatherManager ()
-{
-    NSManagedObjectContext *context;
-    AppDelegate *appDelegate;
-}
-@end
+#import "WeatherCommunicator.h"
+#import "JsonParser.h"
 
 @implementation WeatherManager
 
-+ (WeatherManager *)sharedInstance
+- (void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    static WeatherManager * _sharedInstance = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        _sharedInstance = [[WeatherManager alloc] init];
-    });
-    return _sharedInstance;
+    [self.communicator searchWeatherDataByCoordinate:coordinate];
 }
 
-- (id)init
+- (void)fetchWeatherDataByCityName:(NSString *)name
 {
-    self = [super init];
-    if (self) {
-        if(!context) {
-            appDelegate = [[UIApplication sharedApplication] delegate];
-            context = [appDelegate managedObjectContext];
-        }
+    [self.communicator searchWeatherDataByCityName:name];
+}
+
+#pragma mark - WeatherCommunicatorDelegate
+
+- (void)receivedWeatherDataJson:(NSData *)json
+{
+    NSError *error = nil;
+    NSMutableArray *data = [JsonParser getDataFromJson:json error:&error];
+    
+    if (error != nil) {
+        [self.delegate fetchingFailedWithError:error];
+        
+    } else {
+        [self.delegate didReceiveWeatherData:data];
     }
-    return self;
 }
 
-//-(void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-//{
-//    context = managedObjectContext;
-//}
-
+- (void)fetchingFailedWithError:(NSError *)error
+{
+    [self.delegate fetchingFailedWithError:error];
+}
 @end

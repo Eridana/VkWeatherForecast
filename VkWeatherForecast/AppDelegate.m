@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 NSString *docPath()
 {
@@ -18,6 +19,7 @@ NSString *docPath()
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize locationManager = _locationManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -104,6 +106,30 @@ NSString *docPath()
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if([self isLocationServiceAvailable] == NO)
+    {
+        // ?
+    }
+    if (status == kCLAuthorizationStatusAuthorized) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kCLAuthorizationStatusAuthorized" object:self];
+    }
+}
+
+-(BOOL)isLocationServiceAvailable
+{
+    if([CLLocationManager locationServicesEnabled]==NO ||
+       [CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied ||
+       [CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeatherManagerDelegate.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <WeatherManagerDelegate, CLLocationManagerDelegate>
 
 @end

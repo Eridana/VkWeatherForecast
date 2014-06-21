@@ -1,19 +1,21 @@
 //
-//  WeatherApi.h
+//  WeatherManager.h
 //  VkWeatherForecast
 //
-//  Created by Jane on 20.06.14.
+//  Created by Женя Михайлова on 21.06.14.
 //  Copyright (c) 2014 Jane. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "AppDelegate.h"
-#import "WeatherData.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface WeatherManager : NSObject
+#import "WeatherManagerDelegate.h"
+#import "WeatherCommunicatorDelegate.h"
 
-//-(void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (WeatherManager *)sharedInstance;
+@class WeatherCommunicator;
 
-
+@interface WeatherManager : NSObject<WeatherCommunicatorDelegate>
+@property (strong, nonatomic) WeatherCommunicator *communicator;
+@property (weak, nonatomic) id<WeatherManagerDelegate> delegate;
+- (void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

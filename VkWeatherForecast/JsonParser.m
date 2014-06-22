@@ -13,7 +13,7 @@
 
 @implementation JsonParser
 
-+(NSMutableDictionary *)getDataFromJson:(NSData *)json error:(NSError **)error
++ (NSMutableDictionary *)getDataFromJson:(NSData *)json error:(NSError **)error
 {
     NSError *localError = nil;
     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:json options:0 error:&localError];

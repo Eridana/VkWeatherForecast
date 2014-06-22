@@ -8,10 +8,12 @@
 
 #import "CitiesViewController.h"
 #import "UIView+ActivityIndicator.h"
+#import "Constants.h"
 
 @interface CitiesViewController ()
 {
     NSArray *_cities;
+    NSArray *_searchResults;
 }
 @end
 
@@ -23,6 +25,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _cities = [self readCitiesFromFile];
+    _searchResults = [[NSArray alloc] init];
     [self updateTable];
 }
 
@@ -33,7 +36,7 @@
     });
 }
 
--(NSArray *)readCitiesFromFile
+- (NSArray *)readCitiesFromFile
 {
     NSError *error = nil;
     NSString *file = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"cities" ofType: @"txt"] encoding:NSUTF8StringEncoding error:&error];
@@ -50,21 +53,67 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - SearchBar
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self contains[c] %@", searchText];
+    _searchResults = [_cities filteredArrayUsingPredicate:predicate];
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
+
+
 #pragma mark - TableVie
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _cities.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [_searchResults count];
+    } else {
+        return [_cities count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    NSString *city = _cities[indexPath.row];
+    NSString *city = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        city = [_searchResults objectAtIndex:indexPath.row];
+    } else {
+        city = [_cities objectAtIndex:indexPath.row];
+    }
+    static NSString *сellIdentifier = @"CityCell";
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:сellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:сellIdentifier];
+    }
     [cell.textLabel setText:city];
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     NSString *city = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        city = [_searchResults objectAtIndex:indexPath.row];
+    } else {
+        city = [_cities objectAtIndex:indexPath.row];
+    }
+    NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+    [userInfo setObject:city forKey:CITY_NAME_KEY];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cityDidSelect" object:self userInfo:userInfo];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation

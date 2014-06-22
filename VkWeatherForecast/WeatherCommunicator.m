@@ -31,21 +31,28 @@ NSString *const BASE_URL = @"http://api.openweathermap.org/data/2.5/weather";
     }];
 }
 
--(void)searchWeatherDataByCityName:(NSString *)name
+- (void)searchWeatherDataByCityName:(NSString *)name
 {
-    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-    [geoCoder geocodeAddressString:name completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         if ([placemarks count] > 0)
-         {
-             CLPlacemark *mark = (CLPlacemark*)[placemarks objectAtIndex:0];
-             [self searchWeatherDataByCoordinate: mark.location.coordinate];
-         }
-     }];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@?q=%@", BASE_URL, name];
+    NSURL *url = [[NSURL alloc] initWithString: [urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"%@", urlAsString);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error) {
+            [self.delegate fetchingFailedWithError:error];
+        }
+        else {
+            [self.delegate receivedWeatherDataJson:data];
+        }
+    }];
 }
 
     /*
--(CLLocationCoordinate2D) getLocationFromCityName: (NSString*) name
+- (CLLocationCoordinate2D) getLocationFromCityName: (NSString*) name
 {
     double latitude = 0, longitude = 0;
     NSString *esc_addr =  [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

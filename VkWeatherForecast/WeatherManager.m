@@ -45,13 +45,13 @@
 
 #pragma mark - CoreData
 
--(WeatherData *)saveRawDataToWeatherData:(NSMutableDictionary *)rawData
+- (WeatherData *)saveRawDataToWeatherData:(NSMutableDictionary *)rawData
 {
     WeatherData *data = [WeatherData saveWeatherData:rawData inManagedObjectContext:context];
     return data;
 }
 
--(void)saveWeatherData
+- (void)saveWeatherData
 {
     NSError *error = nil;
     if(context.hasChanges) {
@@ -71,7 +71,6 @@
     
     if (error != nil) {
         [self.delegate fetchingFailedWithError:error];
-        
     } else {
         WeatherData *data = [self saveRawDataToWeatherData:rawData];
         [self.delegate didReceiveWeatherData:data];

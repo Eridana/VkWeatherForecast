@@ -20,17 +20,17 @@
     return _sharedInstance;
 }
 
--(double)convertCelsiusToFahrenhate:(double)temp
+- (double)convertCelsiusToFahrenhate:(double)temp
 {
      return temp * (9.0 / 5.0) + 32.0;
 }
 
--(double)convertFahrenhateToCelsuis:(double)temp
+- (double)convertFahrenhateToCelsuis:(double)temp
 {
     return (temp - 32.0) * (5.0 / 9.0);
 }
 
--(double)convertKelvinToCelsius:(double)temp
+- (double)convertKelvinToCelsius:(double)temp
 {
     const double ZERO_CELSIUS_IN_KELVIN = 273.15;
     return temp - ZERO_CELSIUS_IN_KELVIN;

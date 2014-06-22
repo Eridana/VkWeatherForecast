@@ -25,5 +25,6 @@ extern NSString * const SPEED_KEY;
 extern NSString * const CLOUDS_KEY;
 
 extern NSString * const WEATHER_ENTITY_NAME;
+extern NSString * const CITY_NAME_KEY;
 
 @end

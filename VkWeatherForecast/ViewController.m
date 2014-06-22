@@ -13,12 +13,12 @@
 #import "UIView+ActivityIndicator.h"
 #import "WeatherUtils.h"
 #import "CitiesViewController.h"
+#import "Constants.h"
 
 @interface ViewController ()
 {
     WeatherData *_data;
     WeatherManager *_manager;
-    //CLLocationManager * _locationManager;
     NSDateFormatter * _dateFormatter;
 }
 @end
@@ -28,9 +28,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    _dateFormatter = [[NSDateFormatter alloc] init];
-//    [_dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     
     _manager = [[WeatherManager alloc] init];
     _manager.communicator = [[WeatherCommunicator alloc] init];
@@ -45,6 +42,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(startFetchingData:)
                                                  name:@"locationUpdate"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startFetchingDataByCityName:)
+                                                 name:@"cityDidSelect"
                                                object:nil];
     
     [self.view showActivityIndicator];
@@ -66,7 +68,7 @@
     return _locationManager;
 }
 
--(void)locationNotavailable:(NSNotification *)notification
+- (void)locationNotavailable:(NSNotification *)notification
 {
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Геолокация недоступна"
                                                     message:@"Невозможно определить текцщее местоположение. Пожалуйста включите геолокацию в настройках."
@@ -77,33 +79,44 @@
     [self.view stopActivityIndicator];
 }
 
-
--(void)startFetchingData:(NSNotification *)notification
-{
-    [_manager fetchWeatherDataAtCoordinate: self.locationManager.location.coordinate];
-}
-
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"Update location failed with code:%ld", (long)[error code]);
     
 }
 
+- (void)startFetchingData:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
+        [_manager fetchWeatherDataAtCoordinate: self.locationManager.location.coordinate];
+    });
+   
+}
+
+- (void)startFetchingDataByCityName:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
+        NSString *name = [[notification userInfo] objectForKey:CITY_NAME_KEY];
+        [_manager fetchWeatherDataByCityName:name];
+    });
+    
+}
+
 #pragma mark - WeatherManagerDelegate
--(void)didReceiveWeatherData:(WeatherData *)data
+- (void)didReceiveWeatherData:(WeatherData *)data
 {
     _data = data;
     [self reloadData];
 }
 
--(void)fetchingFailedWithError:(NSError *)error
+- (void)fetchingFailedWithError:(NSError *)error
 {
     NSLog(@"Error %@; %@", error, [error localizedDescription]);
 }
 
 #pragma mark - Update view
 
--(void)reloadData
+- (void)reloadData
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if(_data) {
@@ -138,7 +151,7 @@
     [_manager saveWeatherData];
 }
 
--(void)convertToFahrenhate
+- (void)convertToFahrenhate
 {
     if(_data.isFahrenhate == NO) {
         double fahrenheit = [[WeatherUtils sharedInstance] convertCelsiusToFahrenhate:_data.temperature];
@@ -148,7 +161,7 @@
     }
 }
 
--(void)convertToCelsuis
+- (void)convertToCelsuis
 {
     if(_data.isFahrenhate == YES) {
         double celsius = [[WeatherUtils sharedInstance] convertFahrenhateToCelsuis:_data.temperature];

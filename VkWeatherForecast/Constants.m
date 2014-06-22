@@ -25,5 +25,6 @@ NSString * const SPEED_KEY = @"speed";
 NSString * const CLOUDS_KEY = @"clouds";
 
 NSString * const WEATHER_ENTITY_NAME = @"WeatherData";
+NSString * const CITY_NAME_KEY = @"cityName";
 
 @end

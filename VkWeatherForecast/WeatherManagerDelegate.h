@@ -11,6 +11,6 @@
 @class WeatherData;
 
 @protocol WeatherManagerDelegate
-- (void)didReceiveWeatherData:(NSMutableArray *)data;
+- (void)didReceiveWeatherData:(WeatherData *)data;
 - (void)fetchingFailedWithError:(NSError *)error;
 @end

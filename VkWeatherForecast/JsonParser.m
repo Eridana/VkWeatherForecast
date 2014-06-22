@@ -9,6 +9,7 @@
 #import "JsonParser.h"
 #import "WeatherData.h"
 #import "Constants.h"
+#import "WeatherUtils.h"
 
 @implementation JsonParser
 
@@ -29,7 +30,7 @@
             NSDictionary *clouds = [parsedObject objectForKey:key];
             if(clouds) {
                 if([clouds objectForKey:CLOUDS_KEY]) {
-                    [result setValue:[NSNumber numberWithDouble: [[clouds objectForKey:CLOUDS_KEY] doubleValue]] forKey:CLOUDS_KEY];
+                    [result setValue:[clouds objectForKey:CLOUDS_KEY] forKey:CLOUDS_KEY];
                 }
             }
         }
@@ -37,8 +38,10 @@
             NSDictionary *main = [parsedObject objectForKey:key];
             if(main) {
                 if([main objectForKey: HUMIDITY_KEY]){
-                    [result setValue:[NSNumber numberWithDouble: [[main objectForKey:HUMIDITY_KEY] doubleValue]] forKey:HUMIDITY_KEY];
-                    [result setValue:[NSNumber numberWithDouble: [[main objectForKey:TEMPERATURE_KEY] doubleValue]] forKey:TEMPERATURE_KEY];
+                    [result setValue:[main objectForKey:HUMIDITY_KEY] forKey:HUMIDITY_KEY];
+                    double kelvinTemp = [[main objectForKey:TEMPERATURE_KEY] doubleValue];
+                    double celsius = [[WeatherUtils sharedInstance] convertKelvinToCelsius:kelvinTemp];
+                    [result setValue:[NSNumber numberWithDouble:celsius] forKey:TEMPERATURE_KEY];
                 }
             }
         }
@@ -58,7 +61,7 @@
             NSDictionary *wind = [parsedObject objectForKey:key];
             if(wind) {
                 if([wind objectForKey:SPEED_KEY]) {
-                    [result setValue:[NSNumber numberWithDouble: [[wind objectForKey:SPEED_KEY] doubleValue]] forKey:SPEED_KEY];
+                    [result setValue:[wind objectForKey:SPEED_KEY] forKey:SPEED_KEY];
                 }
             }
         }

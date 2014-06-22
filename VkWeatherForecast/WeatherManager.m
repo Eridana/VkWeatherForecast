@@ -8,9 +8,30 @@
 
 #import "WeatherManager.h"
 #import "WeatherCommunicator.h"
+#import "AppDelegate.h"
 #import "JsonParser.h"
+#import "WeatherData+Save.h"
+
+@interface WeatherManager ()
+{
+    NSManagedObjectContext *context;
+    AppDelegate *appDelegate;
+}
+@end
 
 @implementation WeatherManager
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        if(!context) {
+            appDelegate = [[UIApplication sharedApplication] delegate];
+            context = [appDelegate managedObjectContext];
+        }
+    }
+    return self;
+}
 
 - (void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
@@ -22,17 +43,24 @@
     [self.communicator searchWeatherDataByCityName:name];
 }
 
+-(WeatherData *)saveRawDataToWeatherData:(NSMutableDictionary *)rawData
+{
+    WeatherData *data = [WeatherData saveWeatherData:rawData inManagedObjectContext:context];
+    return data;
+}
+
 #pragma mark - WeatherCommunicatorDelegate
 
 - (void)receivedWeatherDataJson:(NSData *)json
 {
     NSError *error = nil;
-    NSMutableArray *data = [JsonParser getDataFromJson:json error:&error];
+    NSMutableDictionary *rawData = [JsonParser getDataFromJson:json error:&error];
     
     if (error != nil) {
         [self.delegate fetchingFailedWithError:error];
         
     } else {
+        WeatherData *data = [self saveRawDataToWeatherData:rawData];
         [self.delegate didReceiveWeatherData:data];
     }
 }

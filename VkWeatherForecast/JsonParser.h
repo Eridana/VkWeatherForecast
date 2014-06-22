@@ -10,5 +10,5 @@
 #import "WeatherData.h"
 
 @interface JsonParser : NSObject
-+(NSMutableArray *)getDataFromJson:(NSData *)json error:(NSError **)error;
++(NSMutableDictionary *)getDataFromJson:(NSData *)json error:(NSError **)error;
 @end

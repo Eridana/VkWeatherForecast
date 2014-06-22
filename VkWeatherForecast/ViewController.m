@@ -8,13 +8,17 @@
 
 #import "ViewController.h"
 #import "WeatherManager.h"
+#import "WeatherData.h"
 #import "WeatherCommunicator.h"
+#import "UIView+ActivityIndicator.h"
+#import "WeatherUtils.h"
 
 @interface ViewController ()
 {
-    NSArray *_data;
+    WeatherData *_data;
     WeatherManager *_manager;
     CLLocationManager * _locationManager;
+    NSDateFormatter * _dateFormatter;
 }
 @end
 
@@ -24,11 +28,15 @@
 {
     [super viewDidLoad];
     
+//    _dateFormatter = [[NSDateFormatter alloc] init];
+//    [_dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    
     _manager = [[WeatherManager alloc] init];
     _manager.communicator = [[WeatherCommunicator alloc] init];
     _manager.communicator.delegate = _manager;
     _manager.delegate = self;
     
+    [self.view showActivityIndicator];
     [self updateLocation];
     
 }
@@ -50,15 +58,9 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation* location = [locations lastObject];
-    NSDate* eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    if (abs(howRecent) < 15.0) {
-        // If the event is recent, do something with it.
-        NSLog(@"latitude %+.6f, longitude %+.6f\n",
-              location.coordinate.latitude,
-              location.coordinate.longitude);
-    }
-    [_manager fetchWeatherDataAtCoordinate:_locationManager.location.coordinate];
+    [_locationManager stopUpdatingLocation];
+    [_manager fetchWeatherDataAtCoordinate:location.coordinate];
+    
     // по названию - [_manager fetchWeatherDataByCityName:name];
 }
 
@@ -69,9 +71,9 @@
 }
 
 #pragma mark - WeatherManagerDelegate
-- (void)didReceiveWeatherData:(NSMutableArray *)dataArray //:(WeatherData *)data
+- (void)didReceiveWeatherData:(WeatherData *)data //:(WeatherData *)data
 {
-    _data = [dataArray firstObject];
+    _data = data;
     [self reloadData];
 }
 
@@ -82,8 +84,66 @@
 
 # pragma mark Update view
 
+
 -(void)reloadData
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_data) {
+            NSLog(@"%@, %.1f", _data.cityName, _data.temperature);
+            [self.cityButton setTitle:_data.cityName forState:UIControlStateNormal];
+            [self.dateLabel setText: _data.dateAsString];
+            [self.descriptionLabel setText: _data.weatherDescription];
+            [self.humidityLabel setText: [NSString stringWithFormat:@"влажность: %.1f%%", _data.humidity]];
+            [self.cloudsLabel   setText: [NSString stringWithFormat:@"облачность: %.1f%%", _data.cloudsValue]];
+            [self.windLabel     setText: [NSString stringWithFormat:@"скорость ветра: %.1f м/с", _data.windSpeed]];
+            [self setTempLabelText:_data.temperature];
+            [self.switchToFahrenhate setSelected:_data.isFahrenhate];
+        }
+
+        [self.view hideActivityIndicator];
+    });
+}
+
+-(void)setMeasurementToF:(BOOL)isFahrenhate
+{
+    
+}
+
+- (IBAction)measureSwitchChanged:(id)sender {
+    if([(UISwitch *)sender isOn]) {
+        [self convertToFahrenhate];
+    }
+    else  {
+        [self convertToCelsuis];
+    }
+}
+
+-(void)convertToFahrenhate
+{
+    if(_data && _data.isFahrenhate == NO) {
+        double fahrenheit = [[WeatherUtils sharedInstance] convertToFahrenhate:_data.temperature];
+        _data.isFahrenhate = YES;
+        _data.temperature = fahrenheit;
+       [self setTempLabelText:_data.temperature];
+    }
+}
+
+-(void)convertToCelsuis
+{
+    if(_data && _data.isFahrenhate == YES) {
+        double celsius = [[WeatherUtils sharedInstance] convertToCelsuis:_data.temperature];
+        _data.isFahrenhate = NO;
+        _data.temperature = celsius;
+        [self setTempLabelText:_data.temperature];
+    }
+}
+
+- (void)setTempLabelText:(double)temp
+{
+    [self.temperatureLabel setText:[NSString stringWithFormat:@"%.1f %@", temp, _data.isFahrenhate ? @"℉" : @"℃"]];
+}
+
+- (IBAction)cityChangeSelected:(id)sender {
     
 }
 

@@ -17,21 +17,30 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:WEATHER_ENTITY_NAME];
     NSError *error = nil;
     data = [[context executeFetchRequest:request error:&error] lastObject];
-    if(!data && !error) {
+    if(!error) {
+        BOOL isFahrenhate = NO;
+        // если объект есть, удаляем
+        if(data) {
+            isFahrenhate = data.isFahrenhate;
+            [context deleteObject:data];
+            if ([context hasChanges] && ![context save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+        }
+        // создаем новый
         data = [NSEntityDescription insertNewObjectForEntityForName:WEATHER_ENTITY_NAME inManagedObjectContext:context];
+        data.isFahrenhate = isFahrenhate;
         data.cityName = [info objectForKey:NAME_KEY];
-        data.humidity = [info objectForKey:HUMIDITY_KEY];
-        data.temperature = [info objectForKey:TEMPERATURE_KEY];
+        data.humidity = [[info objectForKey:HUMIDITY_KEY] doubleValue];
+        data.temperature = [[info objectForKey:TEMPERATURE_KEY] doubleValue];
         data.weatherDescription = [info objectForKey:DESCRIPTION_KEY];
-        data.cloudsValue = [info objectForKey:CLOUDS_KEY];
-        data.isCelsius = [NSNumber numberWithBool: YES];
-        data.windSpeed = [info objectForKey:SPEED_KEY];
-        data.date = [NSDate date];
+        data.cloudsValue = [[info objectForKey:CLOUDS_KEY] doubleValue];
+        data.windSpeed = [[info objectForKey:SPEED_KEY] doubleValue];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+        data.dateAsString = [dateFormatter stringFromDate: [NSDate date]];
         [context save:&error];
-    }
-    else
-    {
-        // replace data with new object
     }
     
     if (error) {
@@ -40,5 +49,6 @@
 
     return data;
 }
+
 
 @end

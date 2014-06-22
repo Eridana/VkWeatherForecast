@@ -15,6 +15,7 @@ extern NSString * const NAME_KEY_JSON;
 extern NSString * const WEATHER_KEY_JSON;
 extern NSString * const WIND_KEY_JSON;
 extern NSString * const CLOUDS_KEY_JSON;
+extern NSString * const CLOUDS_VALUE_KEY_JSON;
 
 extern NSString * const HUMIDITY_KEY;
 extern NSString * const TEMPERATURE_KEY;

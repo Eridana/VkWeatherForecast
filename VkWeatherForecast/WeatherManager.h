@@ -16,5 +16,6 @@
 @interface WeatherManager : NSObject<WeatherCommunicatorDelegate>
 @property (strong, nonatomic) WeatherCommunicator *communicator;
 @property (weak, nonatomic) id<WeatherManagerDelegate> delegate;
-- (void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate;
+-(void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate;
+-(void)saveWeatherData;
 @end

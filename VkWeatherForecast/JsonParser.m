@@ -22,15 +22,14 @@
         *error = localError;
         return nil;
     }
-    
+    // нет города json = {"message":"Error: Not found city","cod":"404"}
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    
     for (NSString *key in parsedObject) {
         if([key isEqualToString: CLOUDS_KEY_JSON]) {
             NSDictionary *clouds = [parsedObject objectForKey:key];
             if(clouds) {
-                if([clouds objectForKey:CLOUDS_KEY]) {
-                    [result setValue:[clouds objectForKey:CLOUDS_KEY] forKey:CLOUDS_KEY];
+                if([clouds objectForKey:CLOUDS_VALUE_KEY_JSON]) {
+                    [result setValue:[clouds objectForKey:CLOUDS_VALUE_KEY_JSON] forKey:CLOUDS_KEY];
                 }
             }
         }

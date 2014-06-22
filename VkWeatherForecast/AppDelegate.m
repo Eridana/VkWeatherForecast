@@ -59,7 +59,7 @@ NSString *docPath()
     }
 }
 
-#pragma mark - Core Data stack
+#pragma mark - CoreData
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -123,9 +123,9 @@ NSString *docPath()
 
 -(BOOL)isLocationServiceAvailable
 {
-    if([CLLocationManager locationServicesEnabled]==NO ||
-       [CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied ||
-       [CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+    if([CLLocationManager locationServicesEnabled] == NO ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted){
         return NO;
     } else {
         return YES;

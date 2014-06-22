@@ -15,6 +15,7 @@ NSString * const NAME_KEY_JSON = @"name";
 NSString * const WEATHER_KEY_JSON = @"weather";
 NSString * const WIND_KEY_JSON = @"wind";
 NSString * const CLOUDS_KEY_JSON = @"clouds";
+NSString * const CLOUDS_VALUE_KEY_JSON = @"all";
 
 NSString * const HUMIDITY_KEY = @"humidity";
 NSString * const TEMPERATURE_KEY = @"temp";

@@ -43,10 +43,23 @@
     [self.communicator searchWeatherDataByCityName:name];
 }
 
+#pragma mark - CoreData
+
 -(WeatherData *)saveRawDataToWeatherData:(NSMutableDictionary *)rawData
 {
     WeatherData *data = [WeatherData saveWeatherData:rawData inManagedObjectContext:context];
     return data;
+}
+
+-(void)saveWeatherData
+{
+    NSError *error = nil;
+    if(context.hasChanges) {
+        [context save:&error];
+    }
+    if (error) {
+        NSLog(@"Error saving weather data: %@", error);
+    }
 }
 
 #pragma mark - WeatherCommunicatorDelegate

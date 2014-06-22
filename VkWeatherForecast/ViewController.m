@@ -53,7 +53,13 @@
     [_locationManager startUpdatingLocation];
 }
 
-#pragma mark LocationDelegate
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - LocationDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -82,7 +88,7 @@
     NSLog(@"Error %@; %@", error, [error localizedDescription]);
 }
 
-# pragma mark Update view
+#pragma mark - Update view
 
 
 -(void)reloadData
@@ -97,7 +103,8 @@
             [self.cloudsLabel   setText: [NSString stringWithFormat:@"облачность: %.1f%%", _data.cloudsValue]];
             [self.windLabel     setText: [NSString stringWithFormat:@"скорость ветра: %.1f м/с", _data.windSpeed]];
             [self setTempLabelText:_data.temperature];
-            [self.switchToFahrenhate setSelected:_data.isFahrenhate];
+            BOOL switchValue = _data.isFahrenhate;
+            [self.switchToFahrenhate setOn:switchValue animated:NO];
         }
 
         [self.view hideActivityIndicator];
@@ -116,25 +123,31 @@
     else  {
         [self convertToCelsuis];
     }
+    [self setTempLabelText:_data.temperature];
+}
+
+- (void)saveWeatherDataChanges
+{
+    [_manager saveWeatherData];
 }
 
 -(void)convertToFahrenhate
 {
-    if(_data && _data.isFahrenhate == NO) {
-        double fahrenheit = [[WeatherUtils sharedInstance] convertToFahrenhate:_data.temperature];
+    if(_data.isFahrenhate == NO) {
+        double fahrenheit = [[WeatherUtils sharedInstance] convertCelsiusToFahrenhate:_data.temperature];
         _data.isFahrenhate = YES;
         _data.temperature = fahrenheit;
-       [self setTempLabelText:_data.temperature];
+        [self saveWeatherDataChanges];
     }
 }
 
 -(void)convertToCelsuis
 {
-    if(_data && _data.isFahrenhate == YES) {
-        double celsius = [[WeatherUtils sharedInstance] convertToCelsuis:_data.temperature];
+    if(_data.isFahrenhate == YES) {
+        double celsius = [[WeatherUtils sharedInstance] convertFahrenhateToCelsuis:_data.temperature];
         _data.isFahrenhate = NO;
         _data.temperature = celsius;
-        [self setTempLabelText:_data.temperature];
+        [self saveWeatherDataChanges];
     }
 }
 
@@ -143,14 +156,10 @@
     [self.temperatureLabel setText:[NSString stringWithFormat:@"%.1f %@", temp, _data.isFahrenhate ? @"℉" : @"℃"]];
 }
 
+#pragma mark - Select city
+
 - (IBAction)cityChangeSelected:(id)sender {
     
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

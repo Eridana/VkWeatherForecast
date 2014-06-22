@@ -12,6 +12,8 @@
 		3F7849EB195535C800547369 /* WeatherCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7849EA195535C800547369 /* WeatherCommunicator.m */; };
 		3F7849F11955363600547369 /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7849F01955363600547369 /* WeatherManager.m */; };
 		3F784A381955834E00547369 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F784A371955834E00547369 /* Constants.m */; };
+		3FA2033E195759B200A51ADA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA2033D195759B200A51ADA /* Reachability.m */; };
+		3FA20340195759CE00A51ADA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA2033F195759CE00A51ADA /* SystemConfiguration.framework */; };
 		3FA6273719570EE300BB45FA /* CitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA6273619570EE300BB45FA /* CitiesViewController.m */; };
 		3FA627391957177300BB45FA /* cities.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3FA627381957177300BB45FA /* cities.txt */; };
 		3FA8ED6A1956A3FC00AB3715 /* WeatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED691956A3FC00AB3715 /* WeatherData.m */; };
@@ -58,6 +60,9 @@
 		3F7849F01955363600547369 /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
 		3F784A361955834E00547369 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		3F784A371955834E00547369 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		3FA2033C195759B200A51ADA /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3FA2033D195759B200A51ADA /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		3FA2033F195759CE00A51ADA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3FA6273519570EE300BB45FA /* CitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesViewController.h; sourceTree = "<group>"; };
 		3FA6273619570EE300BB45FA /* CitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesViewController.m; sourceTree = "<group>"; };
 		3FA627381957177300BB45FA /* cities.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cities.txt; sourceTree = "<group>"; };
@@ -97,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA20340195759CE00A51ADA /* SystemConfiguration.framework in Frameworks */,
 				3F7849D3195529BF00547369 /* CoreLocation.framework in Frameworks */,
 				3FAEBAFF19544F3B00235D5D /* CoreData.framework in Frameworks */,
 				3FAEBAC0195447F600235D5D /* CoreGraphics.framework in Frameworks */,
@@ -118,6 +124,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FA2033B195759A500A51ADA /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3FA2033C195759B200A51ADA /* Reachability.h */,
+				3FA2033D195759B200A51ADA /* Reachability.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		3FA8ED6F1956B81E00AB3715 /* Controllers&Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +168,7 @@
 		3FAEBABC195447F600235D5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3FA2033F195759CE00A51ADA /* SystemConfiguration.framework */,
 				3F7849D2195529BF00547369 /* CoreLocation.framework */,
 				3FAEBAFE19544F3B00235D5D /* CoreData.framework */,
 				3FAEBABD195447F600235D5D /* Foundation.framework */,
@@ -166,6 +182,7 @@
 		3FAEBAC3195447F600235D5D /* VkWeatherForecast */ = {
 			isa = PBXGroup;
 			children = (
+				3FA2033B195759A500A51ADA /* Network */,
 				3FAEBAF419544BD000235D5D /* CoreData */,
 				3FAEBAF319544B3900235D5D /* Weather */,
 				3FA8ED6F1956B81E00AB3715 /* Controllers&Views */,
@@ -355,6 +372,7 @@
 				3FA8ED751956BFC800AB3715 /* WeatherUtils.m in Sources */,
 				3FAEBACE195447F600235D5D /* AppDelegate.m in Sources */,
 				3F7849D1195528A400547369 /* JsonParser.m in Sources */,
+				3FA2033E195759B200A51ADA /* Reachability.m in Sources */,
 				3F7849F11955363600547369 /* WeatherManager.m in Sources */,
 				3FA8ED721956B84F00AB3715 /* UIView+ActivityIndicator.m in Sources */,
 				3FAEBACA195447F600235D5D /* main.m in Sources */,

@@ -14,6 +14,7 @@
 #import "WeatherUtils.h"
 #import "CitiesViewController.h"
 #import "Constants.h"
+#import "Reachability.h"
 
 @interface ViewController ()
 {
@@ -53,6 +54,25 @@
     
 }
 
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    Reachability *r = [Reachability reachabilityWithHostName:@"www.google.com"];
+    NetworkStatus internetStatus = [r currentReachabilityStatus];
+    
+    if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Нет соединения"
+                                                         message:NSLocalizedString(@"Не найдено активное соединение с интернетом. Будут отображены старые данные.", nil)
+                                                        delegate:nil
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+        [alert show];
+        
+    }
+}
+
 #pragma mark - Location
 
 - (CLLocationManager *)locationManager
@@ -71,7 +91,7 @@
 - (void)locationNotavailable:(NSNotification *)notification
 {
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Геолокация недоступна"
-                                                    message:@"Невозможно определить текцщее местоположение. Пожалуйста включите геолокацию в настройках."
+                                                    message:NSLocalizedString(@"Невозможно определить текущее местоположение. Пожалуйста включите геолокацию в настройках.", nil)
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles: nil];
@@ -87,10 +107,9 @@
 
 - (void)startFetchingData:(NSNotification *)notification
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
         [_manager fetchWeatherDataAtCoordinate: self.locationManager.location.coordinate];
-    });
-   
+    //});
 }
 
 - (void)startFetchingDataByCityName:(NSNotification *)notification
@@ -99,7 +118,6 @@
         NSString *name = [[notification userInfo] objectForKey:CITY_NAME_KEY];
         [_manager fetchWeatherDataByCityName:name];
     });
-    
 }
 
 #pragma mark - WeatherManagerDelegate

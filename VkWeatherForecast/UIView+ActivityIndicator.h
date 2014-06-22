@@ -10,8 +10,9 @@
 
 @interface UIView (ActivityIndicator)
 
-- (void)showActivityIndicator;
-- (void)showActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle)style;
-- (void)hideActivityIndicator;
+-(void)showActivityIndicator;
+-(void)showActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle)style;
+-(void)hideActivityIndicator;
+-(void)stopActivityIndicator;
 
 @end

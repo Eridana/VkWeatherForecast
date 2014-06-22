@@ -12,12 +12,13 @@
 #import "WeatherCommunicator.h"
 #import "UIView+ActivityIndicator.h"
 #import "WeatherUtils.h"
+#import "CitiesViewController.h"
 
 @interface ViewController ()
 {
     WeatherData *_data;
     WeatherManager *_manager;
-    CLLocationManager * _locationManager;
+    //CLLocationManager * _locationManager;
     NSDateFormatter * _dateFormatter;
 }
 @end
@@ -36,38 +37,50 @@
     _manager.communicator.delegate = _manager;
     _manager.delegate = self;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(locationNotavailable:)
+                                                 name:@"locationServiceIsNotAvailable"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startFetchingData:)
+                                                 name:@"locationUpdate"
+                                               object:nil];
+    
     [self.view showActivityIndicator];
-    [self updateLocation];
     
 }
 
-- (void)updateLocation
+#pragma mark - Location
+
+- (CLLocationManager *)locationManager
 {
-    if (_locationManager == nil) {
-        _locationManager = [[CLLocationManager alloc] init];
+    if (_locationManager) {
+        return _locationManager;
     }
-    _locationManager.delegate = self;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-    _locationManager.distanceFilter = 100;
     
-    [_locationManager startUpdatingLocation];
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    if ([appDelegate respondsToSelector:@selector(locationManager)]) {
+        _locationManager = [appDelegate performSelector:@selector(locationManager)];
+    }
+    return _locationManager;
 }
 
-- (void)didReceiveMemoryWarning
+-(void)locationNotavailable:(NSNotification *)notification
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Геолокация недоступна"
+                                                    message:@"Невозможно определить текцщее местоположение. Пожалуйста включите геолокацию в настройках."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
+    [self.view stopActivityIndicator];
 }
 
-#pragma mark - LocationDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+-(void)startFetchingData:(NSNotification *)notification
 {
-    CLLocation* location = [locations lastObject];
-    [_locationManager stopUpdatingLocation];
-    [_manager fetchWeatherDataAtCoordinate:location.coordinate];
-    
-    // по названию - [_manager fetchWeatherDataByCityName:name];
+    [_manager fetchWeatherDataAtCoordinate: self.locationManager.location.coordinate];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -77,19 +90,18 @@
 }
 
 #pragma mark - WeatherManagerDelegate
-- (void)didReceiveWeatherData:(WeatherData *)data //:(WeatherData *)data
+-(void)didReceiveWeatherData:(WeatherData *)data
 {
     _data = data;
     [self reloadData];
 }
 
-- (void)fetchingFailedWithError:(NSError *)error
+-(void)fetchingFailedWithError:(NSError *)error
 {
     NSLog(@"Error %@; %@", error, [error localizedDescription]);
 }
 
 #pragma mark - Update view
-
 
 -(void)reloadData
 {
@@ -109,11 +121,6 @@
 
         [self.view hideActivityIndicator];
     });
-}
-
--(void)setMeasurementToF:(BOOL)isFahrenhate
-{
-    
 }
 
 - (IBAction)measureSwitchChanged:(id)sender {
@@ -156,10 +163,18 @@
     [self.temperatureLabel setText:[NSString stringWithFormat:@"%.1f %@", temp, _data.isFahrenhate ? @"℉" : @"℃"]];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 #pragma mark - Select city
 
 - (IBAction)cityChangeSelected:(id)sender {
-    
+    UIStoryboard *storyboard = self.navigationController.storyboard;
+    CitiesViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"CitiesViewController"];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end

@@ -12,6 +12,8 @@
 		3F7849EB195535C800547369 /* WeatherCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7849EA195535C800547369 /* WeatherCommunicator.m */; };
 		3F7849F11955363600547369 /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7849F01955363600547369 /* WeatherManager.m */; };
 		3F784A381955834E00547369 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F784A371955834E00547369 /* Constants.m */; };
+		3FA6273719570EE300BB45FA /* CitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA6273619570EE300BB45FA /* CitiesViewController.m */; };
+		3FA627391957177300BB45FA /* cities.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3FA627381957177300BB45FA /* cities.txt */; };
 		3FA8ED6A1956A3FC00AB3715 /* WeatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED691956A3FC00AB3715 /* WeatherData.m */; };
 		3FA8ED721956B84F00AB3715 /* UIView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED711956B84F00AB3715 /* UIView+ActivityIndicator.m */; };
 		3FA8ED751956BFC800AB3715 /* WeatherUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED741956BFC800AB3715 /* WeatherUtils.m */; };
@@ -56,6 +58,9 @@
 		3F7849F01955363600547369 /* WeatherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherManager.m; sourceTree = "<group>"; };
 		3F784A361955834E00547369 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		3F784A371955834E00547369 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		3FA6273519570EE300BB45FA /* CitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CitiesViewController.h; sourceTree = "<group>"; };
+		3FA6273619570EE300BB45FA /* CitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CitiesViewController.m; sourceTree = "<group>"; };
+		3FA627381957177300BB45FA /* cities.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cities.txt; sourceTree = "<group>"; };
 		3FA8ED681956A3FC00AB3715 /* WeatherData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherData.h; sourceTree = "<group>"; };
 		3FA8ED691956A3FC00AB3715 /* WeatherData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherData.m; sourceTree = "<group>"; };
 		3FA8ED701956B84F00AB3715 /* UIView+ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ActivityIndicator.h"; sourceTree = "<group>"; };
@@ -120,6 +125,8 @@
 				3FA8ED711956B84F00AB3715 /* UIView+ActivityIndicator.m */,
 				3FAEBAD2195447F600235D5D /* ViewController.h */,
 				3FAEBAD3195447F600235D5D /* ViewController.m */,
+				3FA6273519570EE300BB45FA /* CitiesViewController.h */,
+				3FA6273619570EE300BB45FA /* CitiesViewController.m */,
 			);
 			name = "Controllers&Views";
 			sourceTree = "<group>";
@@ -173,6 +180,7 @@
 		3FAEBAC4195447F600235D5D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3FA627381957177300BB45FA /* cities.txt */,
 				3FAEBACC195447F600235D5D /* AppDelegate.h */,
 				3FAEBACD195447F600235D5D /* AppDelegate.m */,
 				3FAEBAC5195447F600235D5D /* VkWeatherForecast-Info.plist */,
@@ -316,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FAEBAD6195447F600235D5D /* Images.xcassets in Resources */,
+				3FA627391957177300BB45FA /* cities.txt in Resources */,
 				3FAEBAC8195447F600235D5D /* InfoPlist.strings in Resources */,
 				3FAEBAD1195447F600235D5D /* Main.storyboard in Resources */,
 			);
@@ -337,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA8ED6A1956A3FC00AB3715 /* WeatherData.m in Sources */,
+				3FA6273719570EE300BB45FA /* CitiesViewController.m in Sources */,
 				3F7849EB195535C800547369 /* WeatherCommunicator.m in Sources */,
 				3FAEBAF719544C0200235D5D /* VkWeatherForecast.xcdatamodeld in Sources */,
 				3FAEBAD4195447F600235D5D /* ViewController.m in Sources */,
@@ -475,6 +485,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VkWeatherForecast/VkWeatherForecast-Prefix.pch";
 				INFOPLIST_FILE = "VkWeatherForecast/VkWeatherForecast-Info.plist";
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -488,6 +499,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VkWeatherForecast/VkWeatherForecast-Prefix.pch";
 				INFOPLIST_FILE = "VkWeatherForecast/VkWeatherForecast-Info.plist";
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -14,6 +14,11 @@ NSString *docPath()
     NSArray *pathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [[pathList objectAtIndex:0] stringByAppendingPathComponent:@"date.td"];
 }
+
+@interface AppDelegate ()<CLLocationManagerDelegate>
+
+@end
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -23,8 +28,16 @@ NSString *docPath()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.locationManager = [[CLLocationManager alloc] init];
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+        self.locationManager.distanceFilter = 100;
+        [self.locationManager startUpdatingLocation];
+    }
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -110,14 +123,22 @@ NSString *docPath()
 
 #pragma mark - CLLocationManagerDelegate
 
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationUpdate" object:self];
+    [_locationManager stopUpdatingLocation];
+}
+
+
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if([self isLocationServiceAvailable] == NO)
     {
-        // ?
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"locationServiceIsNotAvailable" object:self];
     }
-    if (status == kCLAuthorizationStatusAuthorized) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kCLAuthorizationStatusAuthorized" object:self];
+    else {
+        // ?
     }
 }
 

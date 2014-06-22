@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WeatherManagerDelegate.h"
 
-@interface ViewController : UIViewController <WeatherManagerDelegate, CLLocationManagerDelegate>
+@interface ViewController : UIViewController <WeatherManagerDelegate>
+@property (weak, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
 @property (weak, nonatomic) IBOutlet UISwitch *switchToFahrenhate;

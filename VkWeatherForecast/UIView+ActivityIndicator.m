@@ -11,11 +11,11 @@
 
 @implementation UIView (ActivityIndicator)
 
-- (void)showActivityIndicator {
+-(void)showActivityIndicator {
     [self showActivityIndicatorWithStyle:UIActivityIndicatorViewStyleGray];
 }
 
-- (void)showActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) style {
+-(void)showActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) style {
     CGRect frame = self.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
@@ -41,8 +41,13 @@
     [self addSubview:indicator];
 }
 
-- (void)hideActivityIndicator {
+-(void)hideActivityIndicator {
     [[self viewWithTag:1001] removeFromSuperview];
+    [[self viewWithTag:1002] removeFromSuperview];
+}
+
+-(void)stopActivityIndicator
+{
     [[self viewWithTag:1002] removeFromSuperview];
 }
 

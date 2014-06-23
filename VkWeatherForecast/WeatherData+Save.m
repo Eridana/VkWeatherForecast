@@ -43,7 +43,7 @@
         data.cloudsValue = [[info objectForKey:CLOUDS_KEY] doubleValue];
         data.windSpeed = [[info objectForKey:SPEED_KEY] doubleValue];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+        [dateFormatter setDateFormat: @"dd-MMM-yyy HH:mm:ss"];
         data.dateAsString = [dateFormatter stringFromDate: [NSDate date]];
         [context save:&error];
     }

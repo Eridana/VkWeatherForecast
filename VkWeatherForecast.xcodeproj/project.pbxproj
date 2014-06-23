@@ -37,6 +37,7 @@
 		3FAEBAF719544C0200235D5D /* VkWeatherForecast.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBAF519544C0200235D5D /* VkWeatherForecast.xcdatamodeld */; };
 		3FAEBAFF19544F3B00235D5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBAFE19544F3B00235D5D /* CoreData.framework */; };
 		3FAEBB041954523100235D5D /* WeatherData+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBB031954523100235D5D /* WeatherData+Save.m */; };
+		7A49AA5F59414E6582D249AA /* libPods-VkWeatherForecast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 563DB8F09A8D4425AF9F0EDB /* libPods-VkWeatherForecast.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		3FAEBAFE19544F3B00235D5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3FAEBB021954523100235D5D /* WeatherData+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeatherData+Save.h"; sourceTree = "<group>"; };
 		3FAEBB031954523100235D5D /* WeatherData+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeatherData+Save.m"; sourceTree = "<group>"; };
+		563DB8F09A8D4425AF9F0EDB /* libPods-VkWeatherForecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VkWeatherForecast.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DC505CBEAB042A6917C5341 /* Pods-VkWeatherForecast.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VkWeatherForecast.xcconfig"; path = "Pods/Pods-VkWeatherForecast.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,7 @@
 				3FAEBAC0195447F600235D5D /* CoreGraphics.framework in Frameworks */,
 				3FAEBAC2195447F600235D5D /* UIKit.framework in Frameworks */,
 				3FAEBABE195447F600235D5D /* Foundation.framework in Frameworks */,
+				7A49AA5F59414E6582D249AA /* libPods-VkWeatherForecast.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +171,7 @@
 				3FAEBAE2195447F600235D5D /* VkWeatherForecastTests */,
 				3FAEBABC195447F600235D5D /* Frameworks */,
 				3FAEBABB195447F600235D5D /* Products */,
+				5DC505CBEAB042A6917C5341 /* Pods-VkWeatherForecast.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +194,7 @@
 				3FAEBABF195447F600235D5D /* CoreGraphics.framework */,
 				3FAEBAC1195447F600235D5D /* UIKit.framework */,
 				3FAEBADC195447F600235D5D /* XCTest.framework */,
+				563DB8F09A8D4425AF9F0EDB /* libPods-VkWeatherForecast.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,7 +207,6 @@
 				3FAEBAF419544BD000235D5D /* CoreData */,
 				3FAEBAF319544B3900235D5D /* Weather */,
 				3FA8ED6F1956B81E00AB3715 /* Controllers&Views */,
-				3FAEBAF219544B2F00235D5D /* Vk */,
 				3FAEBACF195447F600235D5D /* Main.storyboard */,
 				3FAEBAD5195447F600235D5D /* Images.xcassets */,
 				3FAEBAC4195447F600235D5D /* Supporting Files */,
@@ -241,13 +246,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3FAEBAF219544B2F00235D5D /* Vk */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Vk;
-			sourceTree = "<group>";
-		};
 		3FAEBAF319544B3900235D5D /* Weather */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,9 +282,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3FAEBAEC195447F600235D5D /* Build configuration list for PBXNativeTarget "VkWeatherForecast" */;
 			buildPhases = (
+				9AAD677CCF97413986CAABC5 /* Check Pods Manifest.lock */,
 				3FAEBAB6195447F600235D5D /* Sources */,
 				3FAEBAB7195447F600235D5D /* Frameworks */,
 				3FAEBAB8195447F600235D5D /* Resources */,
+				EB8C7B03E77E4CAEA1BEE830 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -369,6 +369,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9AAD677CCF97413986CAABC5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EB8C7B03E77E4CAEA1BEE830 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-VkWeatherForecast-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3FAEBAB6195447F600235D5D /* Sources */ = {
@@ -511,6 +544,7 @@
 		};
 		3FAEBAED195447F600235D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DC505CBEAB042A6917C5341 /* Pods-VkWeatherForecast.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -525,6 +559,7 @@
 		};
 		3FAEBAEE195447F600235D5D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DC505CBEAB042A6917C5341 /* Pods-VkWeatherForecast.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

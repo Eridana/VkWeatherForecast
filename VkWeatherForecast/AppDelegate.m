@@ -38,6 +38,11 @@ NSString *docPath()
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [VKSdk processOpenURL:url fromApplication:sourceApplication];
+    return YES;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

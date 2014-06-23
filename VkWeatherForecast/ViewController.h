@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "WeatherManagerDelegate.h"
+#import "VKSdk.h"
 
-@interface ViewController : UIViewController <WeatherManagerDelegate>
+@interface ViewController : UIViewController <WeatherManagerDelegate, VKSdkDelegate>
 @property (weak, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;

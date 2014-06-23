@@ -35,6 +35,8 @@
     _manager.communicator.delegate = _manager;
     _manager.delegate = self;
     
+     [self.cityButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(locationNotAvailable:)
                                                  name:@"locationServiceIsNotAvailable"

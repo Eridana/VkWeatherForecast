@@ -130,7 +130,6 @@ NSString *docPath()
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"locationUpdate" object:self];
-    [_locationManager stopUpdatingLocation];
 }
 
 

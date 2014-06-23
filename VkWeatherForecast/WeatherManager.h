@@ -18,5 +18,7 @@
 @property (weak, nonatomic) id<WeatherManagerDelegate> delegate;
 -(void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate;
 -(void)fetchWeatherDataByCityName:(NSString *)name;
+-(void)fetchDataFromDB;
 -(void)saveWeatherData;
+-(BOOL)isConnectionAvailable;
 @end

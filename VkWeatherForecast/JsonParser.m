@@ -16,7 +16,7 @@
 + (NSMutableDictionary *)getDataFromJson:(NSData *)json error:(NSError **)error
 {
     NSError *localError = nil;
-    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:json options:0 error:&localError];
+    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:json options:NSJSONReadingAllowFragments error:&localError];
     
     if (localError != nil) {
         *error = localError;

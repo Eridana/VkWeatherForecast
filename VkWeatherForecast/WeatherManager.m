@@ -11,11 +11,14 @@
 #import "AppDelegate.h"
 #import "JsonParser.h"
 #import "WeatherData+Save.h"
+#import "Constants.h"
+#import "Reachability.h"
 
 @interface WeatherManager ()
 {
     NSManagedObjectContext *context;
     AppDelegate *appDelegate;
+    Reachability *reachability;
 }
 @end
 
@@ -28,19 +31,61 @@
         if(!context) {
             appDelegate = [[UIApplication sharedApplication] delegate];
             context = [appDelegate managedObjectContext];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(checkNetworkStatus:)
+                                                         name:kReachabilityChangedNotification
+                                                       object:nil];
+            
+            reachability = [Reachability reachabilityForInternetConnection];
+            [reachability startNotifier];
         }
     }
     return self;
 }
 
+- (BOOL)isConnectionAvailable
+{
+    reachability = [Reachability reachabilityWithHostName:@"www.google.com"];
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN)) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)checkNetworkStatus:(NSNotification *)notification
+{
+    reachability = [notification object];
+    NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+    if((internetStatus == ReachableViaWiFi) || (internetStatus == ReachableViaWWAN)) {
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"connectionAvailable" object:nil userInfo:nil];
+    }
+}
+
 - (void)fetchWeatherDataAtCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    [self.communicator searchWeatherDataByCoordinate:coordinate];
+    if([self isConnectionAvailable]) {
+        [self.communicator searchWeatherDataByCoordinate:coordinate];
+    }
+    else {
+        [self fetchDataFromDB];
+    }
 }
 
 - (void)fetchWeatherDataByCityName:(NSString *)name
 {
-    [self.communicator searchWeatherDataByCityName:name];
+    if([self isConnectionAvailable]) {
+        [self.communicator searchWeatherDataByCityName:name];
+    }
+    else {
+        [self fetchDataFromDB];
+    }
+}
+
+- (void)fetchDataFromDB
+{
+    WeatherData *data = [self loadWeatherDataFromDdb];
+    [self.delegate didReceiveWeatherData:data];
 }
 
 #pragma mark - CoreData
@@ -60,6 +105,17 @@
     if (error) {
         NSLog(@"Error saving weather data: %@", error);
     }
+}
+
+- (WeatherData *)loadWeatherDataFromDdb
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName: WEATHER_ENTITY_NAME];
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error loading data from db: %@", error);
+    }
+    return [results lastObject];
 }
 
 #pragma mark - WeatherCommunicatorDelegate

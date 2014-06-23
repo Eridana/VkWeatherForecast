@@ -49,6 +49,9 @@ NSString *docPath()
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    if(_locationManager) {
+        [_locationManager startUpdatingLocation];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -138,7 +141,7 @@ NSString *docPath()
         [[NSNotificationCenter defaultCenter] postNotificationName:@"locationServiceIsNotAvailable" object:self];
     }
     else {
-        // ?
+        [_locationManager startUpdatingLocation];
     }
 }
 

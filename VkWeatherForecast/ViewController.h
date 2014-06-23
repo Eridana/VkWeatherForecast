@@ -19,4 +19,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *humidityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cloudsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *vkPostButton;
 @end

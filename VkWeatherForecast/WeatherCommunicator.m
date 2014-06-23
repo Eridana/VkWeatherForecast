@@ -34,6 +34,7 @@ NSString *const BASE_URL = @"http://api.openweathermap.org/data/2.5/weather";
 - (void)searchWeatherDataByCityName:(NSString *)name
 {
     NSString *urlAsString = [NSString stringWithFormat:@"%@?q=%@", BASE_URL, name];
+    // для русских букв в url
     NSURL *url = [[NSURL alloc] initWithString: [urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSLog(@"%@", urlAsString);
     

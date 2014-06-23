@@ -19,6 +19,7 @@
 		3FA8ED6A1956A3FC00AB3715 /* WeatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED691956A3FC00AB3715 /* WeatherData.m */; };
 		3FA8ED721956B84F00AB3715 /* UIView+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED711956B84F00AB3715 /* UIView+ActivityIndicator.m */; };
 		3FA8ED751956BFC800AB3715 /* WeatherUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8ED741956BFC800AB3715 /* WeatherUtils.m */; };
+		3FABE1F91957E82900EFE528 /* NSString+ToLatin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FABE1F81957E82900EFE528 /* NSString+ToLatin.m */; };
 		3FAEBABE195447F600235D5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBABD195447F600235D5D /* Foundation.framework */; };
 		3FAEBAC0195447F600235D5D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBABF195447F600235D5D /* CoreGraphics.framework */; };
 		3FAEBAC2195447F600235D5D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBAC1195447F600235D5D /* UIKit.framework */; };
@@ -72,6 +73,8 @@
 		3FA8ED711956B84F00AB3715 /* UIView+ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ActivityIndicator.m"; sourceTree = "<group>"; };
 		3FA8ED731956BFC800AB3715 /* WeatherUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherUtils.h; sourceTree = "<group>"; };
 		3FA8ED741956BFC800AB3715 /* WeatherUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherUtils.m; sourceTree = "<group>"; };
+		3FABE1F71957E82900EFE528 /* NSString+ToLatin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ToLatin.h"; sourceTree = "<group>"; };
+		3FABE1F81957E82900EFE528 /* NSString+ToLatin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ToLatin.m"; sourceTree = "<group>"; };
 		3FAEBABA195447F600235D5D /* VkWeatherForecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VkWeatherForecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FAEBABD195447F600235D5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FAEBABF195447F600235D5D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -146,6 +149,17 @@
 			name = "Controllers&Views";
 			sourceTree = "<group>";
 		};
+		3FABE1F31957E6F200EFE528 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3FA8ED731956BFC800AB3715 /* WeatherUtils.h */,
+				3FA8ED741956BFC800AB3715 /* WeatherUtils.m */,
+				3FABE1F71957E82900EFE528 /* NSString+ToLatin.h */,
+				3FABE1F81957E82900EFE528 /* NSString+ToLatin.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		3FAEBAB1195447F600235D5D = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +196,7 @@
 		3FAEBAC3195447F600235D5D /* VkWeatherForecast */ = {
 			isa = PBXGroup;
 			children = (
+				3FABE1F31957E6F200EFE528 /* Utils */,
 				3FA2033B195759A500A51ADA /* Network */,
 				3FAEBAF419544BD000235D5D /* CoreData */,
 				3FAEBAF319544B3900235D5D /* Weather */,
@@ -246,8 +261,6 @@
 				3F7849F01955363600547369 /* WeatherManager.m */,
 				3F7849CF195528A400547369 /* JsonParser.h */,
 				3F7849D0195528A400547369 /* JsonParser.m */,
-				3FA8ED731956BFC800AB3715 /* WeatherUtils.h */,
-				3FA8ED741956BFC800AB3715 /* WeatherUtils.m */,
 			);
 			name = Weather;
 			sourceTree = "<group>";
@@ -373,6 +386,7 @@
 				3FAEBACE195447F600235D5D /* AppDelegate.m in Sources */,
 				3F7849D1195528A400547369 /* JsonParser.m in Sources */,
 				3FA2033E195759B200A51ADA /* Reachability.m in Sources */,
+				3FABE1F91957E82900EFE528 /* NSString+ToLatin.m in Sources */,
 				3F7849F11955363600547369 /* WeatherManager.m in Sources */,
 				3FA8ED721956B84F00AB3715 /* UIView+ActivityIndicator.m in Sources */,
 				3FAEBACA195447F600235D5D /* main.m in Sources */,

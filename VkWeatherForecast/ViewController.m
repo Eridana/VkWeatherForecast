@@ -174,6 +174,7 @@
     [self.cloudsLabel   setText: @"облачность: нет данных"];
     [self.windLabel     setText: @"скорость ветра: нет данных"];
     [self setTempLabelText: 0];
+    [self.view hideActivityIndicator];
 }
 
 - (IBAction)measureSwitchChanged:(id)sender {

@@ -9,6 +9,7 @@
 #import "CitiesViewController.h"
 #import "UIView+ActivityIndicator.h"
 #import "Constants.h"
+#import "NSString+ToLatin.h"
 
 @interface CitiesViewController ()
 {
@@ -105,6 +106,9 @@
     } else {
         city = [_cities objectAtIndex:indexPath.row];
     }
+    // openweather не всегда возвращает верное имя для русских названий
+    city = [city toLatinWithDictionary];
+    
     NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
     [userInfo setObject:city forKey:CITY_NAME_KEY];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"cityDidSelect" object:self userInfo:userInfo];

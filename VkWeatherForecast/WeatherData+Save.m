@@ -35,7 +35,7 @@
         data.temperature = [[info objectForKey:TEMPERATURE_KEY] doubleValue];
         // в прошлый раз раз флажок был включен, т.е. нужно отображать с той же температурой в F
         if(isFahrenhate) {
-            data.temperature = [[WeatherUtils sharedInstance] convertCelsiusToFahrenhate:data.temperature];
+            data.temperature = [WeatherUtils convertCelsiusToFahrenhate:data.temperature];
         }
         data.cityName = [info objectForKey:NAME_KEY];
         data.humidity = [[info objectForKey:HUMIDITY_KEY] doubleValue];

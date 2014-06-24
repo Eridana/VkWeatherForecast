@@ -39,7 +39,7 @@
                 if([main objectForKey: HUMIDITY_KEY]){
                     [result setValue:[main objectForKey:HUMIDITY_KEY] forKey:HUMIDITY_KEY];
                     double kelvinTemp = [[main objectForKey:TEMPERATURE_KEY] doubleValue];
-                    double celsius = [[WeatherUtils sharedInstance] convertKelvinToCelsius:kelvinTemp];
+                    double celsius = [WeatherUtils convertKelvinToCelsius:kelvinTemp];
                     [result setValue:[NSNumber numberWithDouble:celsius] forKey:TEMPERATURE_KEY];
                 }
             }

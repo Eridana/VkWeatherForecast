@@ -204,7 +204,7 @@ NSString *const VK_APP_ID = @"4427868";
 - (void)convertToFahrenhate
 {
     if(_data.isFahrenhate == NO) {
-        double fahrenheit = [[WeatherUtils sharedInstance] convertCelsiusToFahrenhate:_data.temperature];
+        double fahrenheit = [WeatherUtils convertCelsiusToFahrenhate:_data.temperature];
         _data.isFahrenhate = YES;
         _data.temperature = fahrenheit;
         [self saveWeatherDataChanges];
@@ -214,7 +214,7 @@ NSString *const VK_APP_ID = @"4427868";
 - (void)convertToCelsuis
 {
     if(_data.isFahrenhate == YES) {
-        double celsius = [[WeatherUtils sharedInstance] convertFahrenhateToCelsuis:_data.temperature];
+        double celsius = [WeatherUtils convertFahrenhateToCelsuis:_data.temperature];
         _data.isFahrenhate = NO;
         _data.temperature = celsius;
         [self saveWeatherDataChanges];

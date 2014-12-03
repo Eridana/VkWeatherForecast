@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 NSString *docPath(void);
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;

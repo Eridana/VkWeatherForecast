@@ -11,7 +11,6 @@
 #import "VKSdk.h"
 
 @interface ViewController : UIViewController <WeatherManagerDelegate, VKSdkDelegate>
-@property (weak, nonatomic) CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cityButton;
 @property (weak, nonatomic) IBOutlet UISwitch *switchToFahrenhate;

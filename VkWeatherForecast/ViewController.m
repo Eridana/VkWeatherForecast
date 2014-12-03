@@ -85,19 +85,6 @@ NSString *const VK_APP_ID = @"4427868";
 
 #pragma mark - Location
 
-- (CLLocationManager *)locationManager
-{
-    if (_locationManager) {
-        return _locationManager;
-    }
-    
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    if ([appDelegate respondsToSelector:@selector(locationManager)]) {
-        _locationManager = [appDelegate performSelector:@selector(locationManager)];
-    }
-    return _locationManager;
-}
-
 - (void)locationNotAvailable:(NSNotification *)notification
 {
     [[[UIAlertView alloc] initWithTitle:@"Геолокация недоступна"
@@ -111,14 +98,18 @@ NSString *const VK_APP_ID = @"4427868";
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Update location failed with code:%ld", (long)[error code]);
+    [[[UIAlertView alloc] initWithTitle:@"Геолокация недоступна"
+                                message:NSLocalizedString(@"Невозможно определить текущее местоположение.", nil)
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles: nil] show];
+    NSLog(@"Update location failed with %@", [error description]);
 }
 
 - (void)startFetchingData:(NSNotification *)notification
 {
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
-    [_manager fetchWeatherDataAtCoordinate: self.locationManager.location.coordinate];
-    //});
+    CLLocation *location = (CLLocation *) [notification object];
+    [_manager fetchWeatherDataAtCoordinate: location.coordinate];
 }
 
 - (void)startFetchingDataByCityName:(NSNotification *)notification
@@ -198,7 +189,9 @@ NSString *const VK_APP_ID = @"4427868";
 
 - (void)saveWeatherDataChanges
 {
-    [_manager saveWeatherData];
+     dispatch_async(dispatch_get_main_queue(), ^{
+         [_manager saveWeatherData];
+     });
 }
 
 - (void)convertToFahrenhate

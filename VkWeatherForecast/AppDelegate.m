@@ -15,7 +15,7 @@ NSString *docPath()
     return [[pathList objectAtIndex:0] stringByAppendingPathComponent:@"date.td"];
 }
 
-@interface AppDelegate ()<CLLocationManagerDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -24,16 +24,15 @@ NSString *docPath()
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize locationManager = _locationManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.locationManager = [[CLLocationManager alloc] init];
-    if ([CLLocationManager locationServicesEnabled]) {
-        self.locationManager.delegate = self;
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-        self.locationManager.distanceFilter = 100;
-        [self.locationManager startUpdatingLocation];
+    _locationManager = [[CLLocationManager alloc] init];
+    if ([self isLocationServiceAvailable]) {
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+        _locationManager.distanceFilter = 100;
+        [self startUpdatingLocation];
     }
     return YES;
 }
@@ -55,7 +54,7 @@ NSString *docPath()
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     if(_locationManager) {
-        [_locationManager startUpdatingLocation];
+         [self startUpdatingLocation];
     }
 }
 
@@ -131,10 +130,9 @@ NSString *docPath()
 
 #pragma mark - CLLocationManagerDelegate
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationUpdate" object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"locationUpdate" object:[locations lastObject]];
 }
 
 
@@ -145,6 +143,16 @@ NSString *docPath()
         [[NSNotificationCenter defaultCenter] postNotificationName:@"locationServiceIsNotAvailable" object:self];
     }
     else {
+        [self startUpdatingLocation];
+    }
+}
+
+- (void)startUpdatingLocation
+{
+    if (_locationManager) {
+        if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [_locationManager requestWhenInUseAuthorization];
+        }
         [_locationManager startUpdatingLocation];
     }
 }

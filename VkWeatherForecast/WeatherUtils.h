@@ -10,9 +10,8 @@
 
 @interface WeatherUtils : NSObject
 
-+(WeatherUtils *)sharedInstance;
--(double)convertCelsiusToFahrenhate:(double)temp;
--(double)convertFahrenhateToCelsuis:(double)temp;
--(double)convertKelvinToCelsius:(double)temp;
++(double)convertCelsiusToFahrenhate:(double)temp;
++(double)convertFahrenhateToCelsuis:(double)temp;
++(double)convertKelvinToCelsius:(double)temp;
 
 @end

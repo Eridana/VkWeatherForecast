@@ -37,6 +37,8 @@
 		3FAEBAF719544C0200235D5D /* VkWeatherForecast.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBAF519544C0200235D5D /* VkWeatherForecast.xcdatamodeld */; };
 		3FAEBAFF19544F3B00235D5D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAEBAFE19544F3B00235D5D /* CoreData.framework */; };
 		3FAEBB041954523100235D5D /* WeatherData+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FAEBB031954523100235D5D /* WeatherData+Save.m */; };
+		3FFD3C301A2F37BC005A4E68 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FFD3C2F1A2F37BC005A4E68 /* Launch Screen.xib */; };
+		3FFD3C341A2F43F8005A4E68 /* clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FFD3C331A2F43F8005A4E68 /* clouds.png */; };
 		7A49AA5F59414E6582D249AA /* libPods-VkWeatherForecast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 563DB8F09A8D4425AF9F0EDB /* libPods-VkWeatherForecast.a */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +101,8 @@
 		3FAEBAFE19544F3B00235D5D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3FAEBB021954523100235D5D /* WeatherData+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WeatherData+Save.h"; sourceTree = "<group>"; };
 		3FAEBB031954523100235D5D /* WeatherData+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WeatherData+Save.m"; sourceTree = "<group>"; };
+		3FFD3C2F1A2F37BC005A4E68 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		3FFD3C331A2F43F8005A4E68 /* clouds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clouds.png; sourceTree = "<group>"; };
 		563DB8F09A8D4425AF9F0EDB /* libPods-VkWeatherForecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VkWeatherForecast.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DC505CBEAB042A6917C5341 /* Pods-VkWeatherForecast.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VkWeatherForecast.xcconfig"; path = "Pods/Pods-VkWeatherForecast.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,6 +171,7 @@
 		3FAEBAB1195447F600235D5D = {
 			isa = PBXGroup;
 			children = (
+				3FFD3C2F1A2F37BC005A4E68 /* Launch Screen.xib */,
 				3FAEBAC3195447F600235D5D /* VkWeatherForecast */,
 				3FAEBAE2195447F600235D5D /* VkWeatherForecastTests */,
 				3FAEBABC195447F600235D5D /* Frameworks */,
@@ -217,6 +222,7 @@
 		3FAEBAC4195447F600235D5D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3FFD3C331A2F43F8005A4E68 /* clouds.png */,
 				3FA627381957177300BB45FA /* cities.txt */,
 				3FAEBACC195447F600235D5D /* AppDelegate.h */,
 				3FAEBACD195447F600235D5D /* AppDelegate.m */,
@@ -354,9 +360,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FAEBAD6195447F600235D5D /* Images.xcassets in Resources */,
+				3FFD3C341A2F43F8005A4E68 /* clouds.png in Resources */,
 				3FA627391957177300BB45FA /* cities.txt in Resources */,
 				3FAEBAC8195447F600235D5D /* InfoPlist.strings in Resources */,
 				3FAEBAD1195447F600235D5D /* Main.storyboard in Resources */,
+				3FFD3C301A2F37BC005A4E68 /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +559,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VkWeatherForecast/VkWeatherForecast-Prefix.pch";
 				INFOPLIST_FILE = "VkWeatherForecast/VkWeatherForecast-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -566,6 +575,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VkWeatherForecast/VkWeatherForecast-Prefix.pch";
 				INFOPLIST_FILE = "VkWeatherForecast/VkWeatherForecast-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

@@ -16,7 +16,7 @@ NSString *const BASE_URL = @"http://api.openweathermap.org/data/2.5/weather";
 
 - (void)searchWeatherDataByCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    NSString *urlAsString = [NSString stringWithFormat:@"%@?lat=%f&lon=%f", BASE_URL, coordinate.latitude, coordinate.longitude];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@?lat=%f&lon=%f&lang=ru", BASE_URL, coordinate.latitude, coordinate.longitude];
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -33,7 +33,7 @@ NSString *const BASE_URL = @"http://api.openweathermap.org/data/2.5/weather";
 
 - (void)searchWeatherDataByCityName:(NSString *)name
 {
-    NSString *urlAsString = [NSString stringWithFormat:@"%@?q=%@", BASE_URL, name];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@?q=%@&lang=ru", BASE_URL, name];
     // для русских букв в url
     NSURL *url = [[NSURL alloc] initWithString: [urlAsString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSLog(@"%@", urlAsString);

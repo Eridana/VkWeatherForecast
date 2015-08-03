@@ -67,6 +67,17 @@ NSString *const VK_APP_ID = @"4427868";
     [self checkConnection];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeNotifications];
+}
+
+- (void)removeNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Check internet connection
 
 -(void)checkConnection
